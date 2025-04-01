@@ -1,0 +1,8 @@
+package enums;
+
+public enum GraphType {
+    ABSTRACT_GRAPH,
+    ORIENTED_GRAPH,
+    WEIGHTED_NOT_ORIENTED_GRAPH,
+    WEIGHTED_ORIENTED_GRAPH
+}
