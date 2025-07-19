@@ -1,4 +1,4 @@
-package graphsGraphics.buttonLogic.buttonInitializers;
+package graphsGraphics.buttonLogic;
 
 import graphs.AbstractGraph;
 import graphs.Node;
@@ -8,11 +8,11 @@ import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-public class BasicGraphButtonInitializer extends ButtonInitializer {
+public class BasicGraphButtonInitializer<K, L> extends ButtonInitializer<K, L> {
     protected final List<ButtonConfiguration> allComponents;
 
-    public <K> BasicGraphButtonInitializer(List<AbstractGraph<K>> graphs) {
-
+    public BasicGraphButtonInitializer(List<AbstractGraph<K, L>> graphs) {
+        super(graphs);
         JButton BFSButton = new JButton();
         BFSButton.setMaximumSize(new Dimension(200, 50));
         BFSButton.setPreferredSize(new Dimension(200, 50));

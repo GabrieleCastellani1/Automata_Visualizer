@@ -1,15 +1,19 @@
-package graphsGraphics;
+package finiteAutomata;
 
+import finiteAutomata.buttons.factories.IOInitializerButtonFactory;
 import graphs.AbstractGraph;
+import graphsGraphics.AbstractGraphPanel;
+import graphsGraphics.GraphButtonPanel;
+import graphsGraphics.buttonLogic.ButtonInitializer;
 import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GraphFrame extends JFrame {
+public class FAFrame extends JFrame {
 
-    public <K, L> GraphFrame(List<AbstractGraph<K, L>> graphs) {
+    public <K, L> FAFrame(List<AbstractGraph<K, L>> graphs) {
         super();
         Dimension preferredDimension = new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
         this.setPreferredSize(preferredDimension);
@@ -17,9 +21,9 @@ public class GraphFrame extends JFrame {
         this.setVisible(true);
         this.setBackground(Color.WHITE);
 
-        GraphPanelFactory factory = new GraphPanelFactory();
-        AbstractGraphPanel<K, L> panel = factory.createGraphPanel(graphs);
-        GraphButtonPanel buttonPanel = factory.createGraphButtonPanel(graphs);
+        AbstractGraphPanel<K, L> panel = new AbstractGraphPanel<>(graphs);
+        ButtonInitializer<K,L> buttonInitializer = new IOInitializerButtonFactory().createInitializer(graphs);
+        GraphButtonPanel buttonPanel = new GraphButtonPanel(buttonInitializer.getAllComponents());
 
         panel.setLayout(new BorderLayout());
         panel.setPreferredSize(preferredDimension);
@@ -53,3 +57,4 @@ public class GraphFrame extends JFrame {
         this.pack();
     }
 }
+

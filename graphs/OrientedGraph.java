@@ -8,7 +8,7 @@ import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.*;
 
-public class OrientedGraph<K> extends AbstractGraph<K> {
+public class OrientedGraph<K, L> extends AbstractGraph<K, L> {
     public OrientedGraph(List<Node<K>> nodes) {
         super(nodes);
     }
@@ -73,7 +73,7 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
     }
 
     @Override
-    public void addEdge(K key1, K key2, Integer weight) {
+    public void addEdge(K key1, K key2, L data) {
         Optional<Node<K>> firstOptionalNode = findNode(key1);
         Optional<Node<K>> secondOptionalNode = findNode(key2);
         if (firstOptionalNode.isPresent() && secondOptionalNode.isPresent()) {
@@ -170,7 +170,7 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
         return TIME;
     }
 
-    public AbstractGraph<K> invertOrientedGraph() {
+    public AbstractGraph<K, L> invertOrientedGraph() {
         Map<Node<K>, Node<K>> invertedMap = new HashMap<>();
         for (Node<K> node : nodes) {
             invertedMap.put(node, new Node<>(node.data));
@@ -192,7 +192,7 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
         }
 
         List<List<Node<K>>> SCC = new ArrayList<>();
-        OrientedGraph<K> GPrimo = (OrientedGraph<K>) invertOrientedGraph();
+        OrientedGraph<K, L> GPrimo = (OrientedGraph<K, L>) invertOrientedGraph();
 
         while (!f.keySet().isEmpty()) {
             int max = 0;

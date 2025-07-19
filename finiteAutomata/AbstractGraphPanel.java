@@ -1,4 +1,4 @@
-package graphsGraphics;
+package finiteAutomata;
 
 import graphs.AbstractGraph;
 
@@ -28,3 +28,4 @@ public class AbstractGraphPanel<K, L> extends JPanel {
         }
     }
 }
+

@@ -1,5 +1,6 @@
-package graphsGraphics.buttonLogic.buttonInitializers;
+package graphsGraphics.buttonLogic;
 
+import graphs.AbstractGraph;
 import graphs.Node;
 import graphs.WeightedGraph;
 
@@ -8,10 +9,13 @@ import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-public class WeightedGraphButtonInitializer extends ButtonInitializer {
+public class WeightedGraphButtonInitializer<K, L> extends ButtonInitializer<K, L> {
     protected final List<ButtonConfiguration> allComponents;
 
-    public <K> WeightedGraphButtonInitializer(WeightedGraph<K> graph) {
+    public WeightedGraphButtonInitializer(List<AbstractGraph<K, L>> graphs) {
+
+        super(graphs);
+        WeightedGraph<K, L> graph = (WeightedGraph<K, L>) graphs.get(0);
 
         JButton KruscalButton = new JButton();
         KruscalButton.setMaximumSize(new Dimension(200, 50));

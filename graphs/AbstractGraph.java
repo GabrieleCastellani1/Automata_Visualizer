@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public abstract class AbstractGraph<K> {
+public abstract class AbstractGraph<K, L> {
     public final List<Node<K>> nodes;
     private final Map<Node<K>, Double> xTotalForces;
     private final Map<Node<K>, Double> yTotalForces;
@@ -28,7 +28,7 @@ public abstract class AbstractGraph<K> {
 
     public abstract void deleteEdge(Node<K> node1, Node<K> node2);
 
-    public abstract void addEdge(K key1, K key2, Integer weight);
+    public abstract void addEdge(K key1, K key2, L data);
 
     private final List<Shape> highlightRectangles;
     private final List<Ellipse2D> highlightCircles;
@@ -241,14 +241,16 @@ public abstract class AbstractGraph<K> {
         double currentXForce;
         double currentYForce;
         for (Node<K> n2 : nodes) {
-            double xForce = -calculateSingleForce(n2, n1, forceFunction, Math::cos);
-            double yForce = -calculateSingleForce(n2, n1, forceFunction, Math::sin);
+            if(!n1.equals(n2)){
+                double xForce = -calculateSingleForce(n2, n1, forceFunction, Math::cos);
+                double yForce = -calculateSingleForce(n2, n1, forceFunction, Math::sin);
 
-            currentXForce = (xTotalForces.get(n2) != null) ? xTotalForces.get(n2) : 0;
-            currentYForce = (yTotalForces.get(n2) != null) ? yTotalForces.get(n2) : 0;
+                currentXForce = (xTotalForces.get(n2) != null) ? xTotalForces.get(n2) : 0;
+                currentYForce = (yTotalForces.get(n2) != null) ? yTotalForces.get(n2) : 0;
 
-            xTotalForces.put(n2, currentXForce + xForce);
-            yTotalForces.put(n2, currentYForce + yForce);
+                xTotalForces.put(n2, currentXForce + xForce);
+                yTotalForces.put(n2, currentYForce + yForce);
+            }
         }
     }
 

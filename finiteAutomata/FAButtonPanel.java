@@ -1,4 +1,4 @@
-package graphsGraphics;
+package finiteAutomata;
 
 import graphsGraphics.buttonLogic.ButtonConfiguration;
 
@@ -6,9 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GraphButtonPanel extends JPanel {
+public class FAButtonPanel extends JPanel {
 
-    public GraphButtonPanel(List<ButtonConfiguration> components) {
+    public FAButtonPanel(List<ButtonConfiguration> components) {
         this.setLayout(new GridBagLayout());
         components.forEach(c -> c.component.setVisible(true));
         components.forEach(c -> c.component.setEnabled(true));

@@ -1,4 +1,4 @@
-package graphsGraphics.buttonLogic.buttonInitializers;
+package graphsGraphics.buttonLogic;
 
 import graphs.AbstractGraph;
 import graphs.Node;
@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class IOButtonInitializer<K> extends ButtonInitializer {
-    private final List<AbstractGraph<K>> graphs;
+public class IOButtonInitializer<K, L> extends ButtonInitializer<K, L> {
 
-    public IOButtonInitializer(List<AbstractGraph<K>> graphs) {
-        this.graphs = graphs;
+    public IOButtonInitializer(List<AbstractGraph<K, L>> graphs) {
+        super(graphs);
     }
 
     @Override
@@ -21,7 +20,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
         return initializeIOButtons(graphs);
     }
 
-    public List<ButtonConfiguration> initializeAddNodeButton(List<AbstractGraph<K>> graphs) {
+    public List<ButtonConfiguration> initializeAddNodeButton(List<AbstractGraph<K, L>> graphs) {
 
         JButton insertNodeButton = new JButton();
         insertNodeButton.setMaximumSize(new Dimension(200, 50));
@@ -56,7 +55,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
         );
     }
 
-    public List<ButtonConfiguration> initializeAddEdgeButton(List<AbstractGraph<K>> graphs) {
+    public List<ButtonConfiguration> initializeAddEdgeButton(List<AbstractGraph<K, L>> graphs) {
 
         JButton addEdgeButton = new JButton();
         addEdgeButton.setMaximumSize(new Dimension(200, 50));
@@ -104,7 +103,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
             graphs.forEach(g -> g.addEdge(
                             (K) insertFirstNodeText.getText(),
                             (K) insertSecondNodeText.getText(),
-                            Integer.parseInt(insertWeightText.getText())
+                            (L) insertWeightText.getText()
                     )
             );
             insertFirstNodeText.setText("");
@@ -120,7 +119,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
         );
     }
 
-    public List<ButtonConfiguration> initializeDeleteNodeButton(List<AbstractGraph<K>> graphs) {
+    public List<ButtonConfiguration> initializeDeleteNodeButton(List<AbstractGraph<K, L>> graphs) {
         JButton deleteNodeButton = new JButton();
         deleteNodeButton.setMaximumSize(new Dimension(200, 50));
         deleteNodeButton.setPreferredSize(new Dimension(200, 50));
@@ -155,7 +154,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
         );
     }
 
-    public List<ButtonConfiguration> initializeDeleteEdgeButton(List<AbstractGraph<K>> graphs) {
+    public List<ButtonConfiguration> initializeDeleteEdgeButton(List<AbstractGraph<K, L>> graphs) {
 
         JButton deleteEdgeButton = new JButton();
         deleteEdgeButton.setMaximumSize(new Dimension(200, 50));
@@ -206,7 +205,7 @@ public class IOButtonInitializer<K> extends ButtonInitializer {
         );
     }
 
-    public List<ButtonConfiguration> initializeIOButtons(List<AbstractGraph<K>> graphs) {
+    public List<ButtonConfiguration> initializeIOButtons(List<AbstractGraph<K, L>> graphs) {
         List<ButtonConfiguration> IOComponents = new ArrayList<>(initializeAddNodeButton(graphs));
         IOComponents.addAll(initializeAddEdgeButton(graphs));
         IOComponents.addAll(initializeDeleteNodeButton(graphs));

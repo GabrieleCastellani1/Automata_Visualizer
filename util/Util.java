@@ -10,6 +10,7 @@ public class Util {
     public static int FRAMEHEIGHT = 600;
     public static int BUTTONWIDTH = 220;
     public static int BUTTONHEIGHT = 50;
+    public static int SIDELENGTH = 70;
     public static final double cSpring = 24;
     public static final double l = 130;
     public static final double cRep = 40000;

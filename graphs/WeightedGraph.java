@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.*;
 
-public class WeightedGraph<K> extends AbstractGraph<K> {
+public class WeightedGraph<K, L> extends AbstractGraph<K, L> {
 
     private final List<WeightedEdge> weightedEdges;
     private final EdgeInsertType type;
@@ -45,7 +45,8 @@ public class WeightedGraph<K> extends AbstractGraph<K> {
     }
 
     @Override
-    public void addEdge(K key1, K key2, Integer weight) {
+    public void addEdge(K key1, K key2, L data) {
+        Integer weight = Integer.parseInt((String) data);
         switch (type) {
             case SINGLE:
                 addSingleEdge(key1, key2, weight);

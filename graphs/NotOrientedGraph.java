@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-public class NotOrientedGraph<K> extends AbstractGraph<K> {
+public class NotOrientedGraph<K, L> extends AbstractGraph<K, L> {
 
     public NotOrientedGraph(List<Node<K>> nodes) {
         super(nodes);
@@ -29,7 +29,7 @@ public class NotOrientedGraph<K> extends AbstractGraph<K> {
     }
 
     @Override
-    public void addEdge(K key1, K key2, Integer weight) {
+    public void addEdge(K key1, K key2, L data) {
         Optional<Node<K>> firstOptionalNode = findNode(key1);
         Optional<Node<K>> secondOptionalNode = findNode(key2);
         if (firstOptionalNode.isPresent() && secondOptionalNode.isPresent()) {

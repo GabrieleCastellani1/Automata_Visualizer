@@ -1,4 +1,4 @@
-package graphsGraphics.buttonLogic.buttonInitializers;
+package graphsGraphics.buttonLogic;
 
 import java.awt.*;
 

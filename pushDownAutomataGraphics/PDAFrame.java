@@ -1,26 +1,22 @@
-package graphsGraphics;
+package pushDownAutomataGraphics;
 
-import graphs.AbstractGraph;
+import pushDownAutomata.PushDownAutomata;
 import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
-public class GraphFrame extends JFrame {
+public class PDAFrame<K> extends JFrame{
 
-    public <K, L> GraphFrame(List<AbstractGraph<K, L>> graphs) {
+    public <K> PDAFrame(PushDownAutomata<K> pda){
         super();
-        Dimension preferredDimension = new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
-        this.setPreferredSize(preferredDimension);
+        this.setPreferredSize(new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT));
         this.setResizable(true);
         this.setVisible(true);
-        this.setBackground(Color.WHITE);
+        PDAPanel<?> panel = new PDAPanel<>(pda);
 
-        GraphPanelFactory factory = new GraphPanelFactory();
-        AbstractGraphPanel<K, L> panel = factory.createGraphPanel(graphs);
-        GraphButtonPanel buttonPanel = factory.createGraphButtonPanel(graphs);
-
+        PDAControlPanel<K> PDAControlPanel = new PDAControlPanel<>(pda);
+        Dimension preferredDimension = new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
         panel.setLayout(new BorderLayout());
         panel.setPreferredSize(preferredDimension);
 
@@ -30,7 +26,7 @@ public class GraphFrame extends JFrame {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
 
-        JViewport viewport = new JViewport() {
+        JViewport viewport = new JViewport(){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -44,9 +40,9 @@ public class GraphFrame extends JFrame {
 
         JSplitPane container = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         container.setTopComponent(scrollPane);
-        container.setBottomComponent(buttonPanel);
-        container.setDividerLocation(Util.FRAMEWIDTH / 2);
-        container.setPreferredSize(new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT));
+        container.setBottomComponent(PDAControlPanel);
+        container.setDividerLocation(Util.FRAMEWIDTH/2);
+        container.setPreferredSize(preferredDimension);
         container.setVisible(true);
 
         this.add(container);
