@@ -5,6 +5,7 @@ import util.Util;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 import java.util.Queue;
 import java.util.*;
@@ -15,6 +16,12 @@ public abstract class AbstractGraph<K, L> {
     public final List<Node<K>> nodes;
     private final Map<Node<K>, Double> xTotalForces;
     private final Map<Node<K>, Double> yTotalForces;
+
+    // Enhanced color scheme
+    private static final Color EDGE_COLOR = new Color(90, 150, 200);
+    private static final Color HIGHLIGHT_CIRCLE = new Color(255, 193, 7, 200);
+    private static final Color HIGHLIGHT_RECTANGLE = new Color(40, 167, 69, 180);
+    private static final Color HIGHLIGHT_BORDER = new Color(255, 255, 255, 100);
 
     public Iterator<Node<K>> getNodesIterator() {
         return this.nodes.iterator();
@@ -46,10 +53,21 @@ public abstract class AbstractGraph<K, L> {
     public void drawGraph(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
+        // Enable high-quality rendering
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
         for (Iterator<Node<K>> it = this.getNodesIterator(); it.hasNext(); ) {
             Node<K> state = it.next();
             int x = state.getX();
             int y = state.getY();
+
+            // Draw edges with enhanced styling
+            g2d.setColor(EDGE_COLOR);
+            g2d.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
             for (Node<K> relative : state.getNodes()) {
                 g2d.drawLine(
                         x + Util.OVALDIAMETER / 2,
@@ -59,17 +77,38 @@ public abstract class AbstractGraph<K, L> {
                 );
                 relative.draw(g2d);
             }
+
             try {
-                g2d.setColor(Color.YELLOW);
+                // Draw enhanced highlight rectangles
                 for (Shape rectangle : highlightRectangles) {
+                    // Draw glow effect
+                    g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                    g2d.setColor(HIGHLIGHT_BORDER);
+                    g2d.draw(rectangle);
+
+                    // Draw main rectangle
+                    g2d.setColor(HIGHLIGHT_RECTANGLE);
                     g2d.fill(rectangle);
                 }
-                g2d.setColor(Color.BLACK);
+
+                // Draw enhanced highlight circles
+                g2d.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
                 for (Ellipse2D circle : highlightCircles) {
+                    // Draw glow effect
+                    g2d.setColor(HIGHLIGHT_BORDER);
+                    g2d.draw(circle);
+
+                    // Draw main circle
+                    g2d.setColor(HIGHLIGHT_CIRCLE);
+                    g2d.fill(circle);
+
+                    // Draw inner border
+                    g2d.setColor(new Color(255, 255, 255, 80));
+                    g2d.setStroke(new BasicStroke(1.5f));
                     g2d.draw(circle);
                 }
             } catch (ConcurrentModificationException ignored) {
-
+                // Handle concurrent modification gracefully
             } finally {
                 state.draw(g2d);
             }
@@ -86,9 +125,18 @@ public abstract class AbstractGraph<K, L> {
     }
 
     public Shape addRectangle(Node<K> n1, Node<K> n2) {
-        int width = 10;
+        int width = 12; // Slightly wider for better visibility
         int height = (int) Math.sqrt(Math.pow((n2.getX() - n1.getX()), 2) + Math.pow(n2.getY() - n1.getY(), 2));
-        Rectangle rectangle = new Rectangle(n1.getX() - width / 2, n1.getY() - width / 2, width, height);
+
+        // Use RoundRectangle2D for smoother corners
+        RoundRectangle2D rectangle = new RoundRectangle2D.Double(
+                n1.getX() - width / 2.0,
+                n1.getY() - width / 2.0,
+                width,
+                height,
+                4, 4 // Rounded corners
+        );
+
         AffineTransform rotate = AffineTransform.getRotateInstance(
                 calculateAngle(n1, n2) + Math.PI / 2,
                 n1.getX(),
@@ -283,7 +331,6 @@ public abstract class AbstractGraph<K, L> {
     protected double calculateAngle(Node<K> n1, Node<K> n2) {
         return Math.atan2(n1.y - n2.y, n1.x - n2.x);
     }
-
 
     public Map<Node<K>, Node<K>> BFS(Node<K> s) {//visita ricorsiva "a livelli" del grafo
         Map<Node<K>, Integer> d = new HashMap<>();

@@ -17,11 +17,17 @@ public class PDAPanel<K> extends JPanel {
     public PDAPanel(PushDownAutomata<K> pda){
         this.pda = pda;
         this.size = this.getSize();
+        setBackground(new Color(248, 249, 250)); // Modern light background
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        // Enable antialiasing for smoother rendering
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
         this.getSize(size);
         Collection<AbstractViewManager<K>> viewManagers = pda.getViewManagers();
         try {

@@ -80,49 +80,6 @@ public class PushDownAutomata <K> {
         this.queueViewManager = viewManagerFactory.createQueueViewManager();
         this.inititalStack = new Stack<>();
         this.viewManagers = new TreeNode<>(new StackViewData<>(inititalStack, viewManagerFactory.createStackViewManager()));
-        /*
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "a", (K) "Z"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(0, List.of((K) "Z", (K) "A"))))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "b", (K) "Z"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(0, List.of((K) "Z", (K) "B"))))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "a", (K) "A"),
-                new ArrayList<>(List.of(
-                        new TransitionValue<>(0, List.of((K) "A", (K) "A")),
-                        new TransitionValue<>(1, null)))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "b", (K) "A"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(0, List.of((K) "A", (K) "B"))))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "a", (K) "B"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(0, List.of((K) "B", (K) "A"))))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(0, (K) "b", (K) "B"),
-                new ArrayList<>(List.of(
-                        new TransitionValue<>(0, List.of((K) "B", (K) "B")),
-                        new TransitionValue<>(1, null)))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(1, null, (K) "Z"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(1, List.of((K) "A", (K) "A"))))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(1, (K) "a", (K) "A"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(1, null)))
-        );
-        transitionMatrix.put(
-                new TransitionKey<K>(1, (K) "b", (K) "B"),
-                new ArrayList<>(Collections.singleton(new TransitionValue<>(1, null)))
-        );
-        acceptStates.add(1);
-        setInitialState(0);*/
     }
 
     // Setup methods

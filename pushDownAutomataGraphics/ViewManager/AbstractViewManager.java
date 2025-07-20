@@ -77,7 +77,6 @@ public abstract class AbstractViewManager<K> {
     }
 
     public void addPin(int i){
-
         int x = get(i).x + 30;
         int y = get(i).y;
 
